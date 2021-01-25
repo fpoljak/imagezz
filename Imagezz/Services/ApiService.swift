@@ -25,7 +25,6 @@ public class ApiService {
         configuration.timeoutIntervalForResource = TimeInterval(10)
         configuration.timeoutIntervalForRequest = TimeInterval(10)
         configuration.requestCachePolicy = NSURLRequest.CachePolicy.reloadIgnoringLocalAndRemoteCacheData
-//        configuration.urlCache = URLCache(memoryCapacity: 40 * 1024 * 1024, diskCapacity: 80 * 1024 * 1024, diskPath: nil)
 
         return Session.init(configuration: configuration)
     }()

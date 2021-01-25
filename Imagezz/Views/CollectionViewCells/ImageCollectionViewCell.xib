@@ -18,6 +18,9 @@
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AR6-S1-ZFJ">
                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="AR6-S1-ZFJ" secondAttribute="height" multiplier="1:1" id="fjn-CX-Smw"/>
+                        </constraints>
                     </imageView>
                 </subviews>
             </view>

@@ -35,14 +35,17 @@ class MainViewController: UIViewController {
     }
     
     private func createLayout() -> UICollectionViewLayout {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),heightDimension: .fractionalHeight(1.0))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5),heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets.zero
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),heightDimension: .fractionalHeight(1.0))
+        item.contentInsets = .zero
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),heightDimension: .fractionalHeight(0.25))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
-        group.interItemSpacing = .fixed(CGFloat(0))
+        group.interItemSpacing = .fixed(0)
+        group.contentInsets = .zero
         let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = .zero
         let layout = UICollectionViewCompositionalLayout(section: section)
+        layout.configuration.interSectionSpacing = 0
         return layout
     }
 
