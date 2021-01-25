@@ -3,10 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0519B39025BF383900C72AFF /* Combine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0519B38F25BF383900C72AFF /* Combine.framework */; };
+		0519B39125BF385300C72AFF /* Combine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0519B38F25BF383900C72AFF /* Combine.framework */; };
 		0524DF6C25BF2EB400C2CC53 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0524DF6B25BF2EB400C2CC53 /* AppDelegate.swift */; };
 		0524DF6E25BF2EB400C2CC53 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0524DF6D25BF2EB400C2CC53 /* SceneDelegate.swift */; };
 		0524DF7025BF2EB400C2CC53 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0524DF6F25BF2EB400C2CC53 /* ViewController.swift */; };
@@ -37,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0519B38F25BF383900C72AFF /* Combine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Combine.framework; path = System/Library/Frameworks/Combine.framework; sourceTree = SDKROOT; };
 		0524DF6825BF2EB400C2CC53 /* Imagezz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Imagezz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0524DF6B25BF2EB400C2CC53 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0524DF6D25BF2EB400C2CC53 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -64,6 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0519B39025BF383900C72AFF /* Combine.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0519B39125BF385300C72AFF /* Combine.framework in Frameworks */,
 				F0E741783E8E28A772322245 /* Pods_ImagezzTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -148,13 +153,13 @@
 				ECAFF487C99A2A92F59FB34E /* Pods-ImagezzUITests.debug.xcconfig */,
 				0DDCB2071CEF78870E0C863F /* Pods-ImagezzUITests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
 		B9780B408152EC3A25855235 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0519B38F25BF383900C72AFF /* Combine.framework */,
 				DDF7923BDE1F5F6F1937020A /* Pods_ImagezzTests.framework */,
 				F1CA91676EFDA91A8F9D4071 /* Pods_ImagezzUITests.framework */,
 			);
