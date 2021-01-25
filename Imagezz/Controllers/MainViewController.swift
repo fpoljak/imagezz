@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MainViewController.swift
 //  Imagezz
 //
 //  Created by Frane Poljak on 25/01/2021.
@@ -8,13 +8,17 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class MainViewController: UIViewController {
 
+    var viewModel: MainViewModel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        viewModel = MainViewModel()
+
+        print("loading images...")
+        viewModel.loadImagesList()
     }
-
-
 }
-

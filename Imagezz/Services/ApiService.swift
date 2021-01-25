@@ -48,8 +48,7 @@ public class ApiService {
     }
     
     @discardableResult
-    static func genericRequest<T: Codable>(method: HTTPMethod, endpoint: String, params: [String: Any]? = nil, completion: ((T?) -> Void)) -> DataRequest {
-        
+    static func genericRequest<T: Codable>(method: HTTPMethod, endpoint: String, params: [String: Any]? = nil, completion: @escaping ((T?) -> Void)) -> DataRequest {
         
         let fullUrl = baseUrl + endpoint
         let encoding: ParameterEncoding = method == .get ? URLEncoding.default : JSONEncoding.default
