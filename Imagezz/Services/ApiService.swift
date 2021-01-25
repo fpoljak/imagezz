@@ -51,6 +51,8 @@ public class ApiService {
     static func genericRequest<T: Codable>(method: HTTPMethod, endpoint: String, params: [String: Any]? = nil, completion: @escaping ((T?) -> Void)) -> DataRequest {
         
         let fullUrl = baseUrl + endpoint
+        print("URL: \(fullUrl)")
+        print("Params: \(params ?? [:])")
         let encoding: ParameterEncoding = method == .get ? URLEncoding.default : JSONEncoding.default
         
         let request = sessionManager.request(fullUrl, method: method, parameters: params, encoding: encoding, headers: getHeaders())
@@ -62,6 +64,7 @@ public class ApiService {
                     return
                 }
 //                errorHandler(error)
+                defaultErrorHandler(error)
                 return
             }
             if let value = response.value as T? {
