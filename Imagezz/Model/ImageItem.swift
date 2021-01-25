@@ -8,11 +8,19 @@
 
 import Foundation
 
-struct ImageItem: Codable {
+struct ImageItem: Codable, Hashable {
     let id: String
     let author: String
     let width: Int
     let height: Int
-    let url: String
-    let downloadUrl: String
+    let url: URL
+    let downloadUrl: URL
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    static func == (lhs: ImageItem, rhs: ImageItem) -> Bool {
+        return lhs.id == rhs.id
+    }
 }
