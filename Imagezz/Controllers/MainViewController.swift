@@ -17,6 +17,8 @@ class MainViewController: UIViewController {
     
     private var disposables: Set<AnyCancellable> = []
     
+    let imageHeight = UIScreen.main.bounds.size.width / 2
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,20 +26,15 @@ class MainViewController: UIViewController {
 
         configureCollectionView()
         viewModel.loadImagesList()
-        
-        viewModel.$selectedItem.sink { [unowned self] (item) in
-            guard let item = item else {
-                return
-            }
-            let vc = ImageDetailViewController()
-            vc.viewModel.imageItem = item
-            self.present(vc, animated: true, completion: nil)
-        }.store(in: &disposables)
     }
     
     private func configureCollectionView() {
+        collectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: "ImageCollectionViewCell")
+        collectionView.register(UINib.init(nibName: "ImageCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ImageCollectionViewCell")
+        collectionView.register(ImageListFooterReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: ImageListFooterReusableView.reuseIdentifier)
+        
         collectionView.dataSource = viewModel.makeDataSource()
-        collectionView.delegate = viewModel
+        collectionView.delegate = self
         collectionView.collectionViewLayout = createLayout()
     }
     
@@ -66,10 +63,39 @@ class MainViewController: UIViewController {
         return layout
     }
     
+    func openImageDetails(_ item: ImageItem) {
+        let vc = ImageDetailViewController()
+        vc.viewModel.imageItem = item
+        present(vc, animated: true, completion: nil)
+    }
+    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         // handle orientation change
         collectionView.collectionViewLayout.invalidateLayout()
         collectionView.collectionViewLayout = createLayout()
+    }
+}
+
+// MARK: - UICollectionViewDelegate Implementation
+extension MainViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let item = viewModel.items.value[indexPath.item]
+        openImageDetails(item)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if viewModel.isLoading || viewModel.reachedEnd {
+            return
+        }
+        let scrollY = scrollView.contentOffset.y
+        let scrollingUp = scrollY < viewModel.lastScrollY
+        viewModel.lastScrollY = scrollY
+        if scrollingUp {
+            return
+        }
+        if scrollY > scrollView.contentSize.height - scrollView.bounds.size.height - imageHeight * 1.5 {
+            viewModel.loadImagesList()
+        }
     }
 }

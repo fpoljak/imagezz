@@ -15,19 +15,13 @@ class MainViewModel: CollectionViewModel<ImageCollectionViewCell, ImageListSecti
     var reachedEnd = false
     
     @Published var isLoading = false
-    @Published var selectedItem: ImageItem?
     
     private var disposables: Set<AnyCancellable> = []
     
-    let imageHeight = UIScreen.main.bounds.size.width / 2
-    
     init(collectionView: UICollectionView) {
         super.init(collectionView: collectionView, cellReuseIdentifier: "ImageCollectionViewCell")
-        collectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: "ImageCollectionViewCell")
-        collectionView.register(UINib.init(nibName: "ImageCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ImageCollectionViewCell")
-        collectionView.register(ImageListFooterReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: ImageListFooterReusableView.reuseIdentifier
-        )
         
+        // trigger update to show/hide loader on bottom
         $isLoading.sink { [unowned self] (newValue) in
             self.update()
         }.store(in: &disposables)
@@ -72,32 +66,5 @@ class MainViewModel: CollectionViewModel<ImageCollectionViewCell, ImageListSecti
         currentPage = 0
         reachedEnd = false
         loadImagesList()
-    }
-    
-    func openImageDetails(_ item: ImageItem) {
-        selectedItem = item
-    }
-}
-
-// MARK: - UICollectionViewDelegate Implementation
-extension MainViewModel: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let item = items.value[indexPath.item]
-        openImageDetails(item)
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if isLoading || reachedEnd {
-            return
-        }
-        let scrollY = scrollView.contentOffset.y
-        let scrollingUp = scrollY < lastScrollY
-        lastScrollY = scrollY
-        if scrollingUp {
-            return
-        }
-        if scrollY > scrollView.contentSize.height - scrollView.bounds.size.height - imageHeight * 1.5 {
-            loadImagesList()
-        }
     }
 }
