@@ -15,10 +15,12 @@ class ImagezzTests: XCTestCase {
     override func setUpWithError() throws {
         // enable mocking api calls
         HTTPStubs.setEnabled(true)
+        
         let host = URL(string: ApiService.baseUrl)!.host!
-        stub(condition: isHost(host)) { request in
+        
+        let stubBlock: ((URLRequest) -> HTTPStubsResponse) = { request in
             // if photo:
-            if let url = request.url?.absoluteString, url.hasPrefix("https://picsum.photos/id/") {
+            if let url = request.url?.absoluteString, (url.hasPrefix(ApiService.baseUrl + "id/") || url.hasPrefix("http://localhost:8080/id/")) {
                 if let path = OHPathForFile("photo.jpg", type(of: self)) {
                     return fixture(filePath: path, headers: ["Content-Type": "image/jpeg"])
                 }
@@ -36,6 +38,10 @@ class ImagezzTests: XCTestCase {
             let data = "{}".data(using: String.Encoding.utf8)
             return HTTPStubsResponse(data: data!, statusCode: 200, headers: ["Content-Type": "application/json"])
         }
+        
+        stub(condition: isHost(host), response: stubBlock)
+        stub(condition: isHost("localhost"), response: stubBlock)
+        
         continueAfterFailure = false
     }
 
@@ -62,7 +68,7 @@ class ImagezzTests: XCTestCase {
     }
     
     func testDetails() throws {
-        let item = ImageItem(id: "1", author: "John Smith", width: 20, height: 20, url: URL(string: "https://unsplash.com/photos/yC-Yzbqy7PY")!, downloadUrl: URL(string: "https://picsum.photos/id/0/5616/3744")!)
+        let item = ImageItem(id: "1", author: "John Smith", width: 20, height: 20, url: URL(string: "https://picsum.photos/photos/yC-Yzbqy7PY")!, downloadUrl: URL(string: "https://picsum.photos/id/0/5616/3744")!)
         let vc = ImageDetailViewController()
         vc.loadViewIfNeeded()
         vc.viewModel.imageItem = item

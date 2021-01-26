@@ -7,37 +7,93 @@
 //
 
 import XCTest
+import Swifter
 
 class ImagezzUITests: XCTestCase {
-
+    var server: HttpServer!
+    
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
+        try super.setUpWithError()
+        
         continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        server.stop()
+        try super.tearDownWithError()
     }
 
     func testExample() throws {
-        // UI tests must launch the application that they test.
+        server = HttpServer()
+        server.stubRequestsForEndpoint("list")
+        server.stubRequestsForImages()
+        try server.start()
+        
         let app = XCUIApplication()
+        app.launchArguments += ["TESTING"]
+        
         app.launch()
 
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        let exists = NSPredicate(format: "exists == true")
+        
+        let cells = app.collectionViews.cells
+        let firstCell = cells.firstMatch
+        
+        self.expectation(for: exists, evaluatedWith: firstCell, handler: nil)
+        
+        self.waitForExpectations(timeout: 3.0) { (error) in
+            guard error == nil else {
+                return
+            }
+            
+            cells.element(boundBy: 0).tap()
+        }
     }
 
     func testLaunchPerformance() throws {
         if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
             // This measures how long it takes to launch your application.
+            server = HttpServer()
+            server.stubRequestsForEndpoint("list")
+            server.stubRequestsForImages()
+            try server.start()
+            
             measure(metrics: [XCTOSSignpostMetric.applicationLaunch]) {
                 XCUIApplication().launch()
             }
+        }
+    }
+}
+
+extension HttpServer {
+    func stubRequestsForEndpoint(_ endpoint: String) {
+        var filename = endpoint
+        if filename.hasSuffix(".json") {
+            filename = String(filename.dropLast(5))
+        }
+        
+        self["/v2/" + endpoint] = { _ in
+            guard let url = Bundle(for: ImagezzUITests.self).url(forResource: filename, withExtension: "json") else {
+                return HttpResponse.ok(.json("{}".data(using: .utf8) as AnyObject))
+            }
+            guard let data = try? Data(contentsOf: url) else {
+                return HttpResponse.ok(.json("{}".data(using: .utf8) as AnyObject))
+            }
+            
+            return HttpResponse.ok(.data(data, contentType: "application/json"))
+        }
+    }
+    
+    func stubRequestsForImages() {
+        self["/id/:path"] = { _ in
+            guard let url = Bundle(for: ImagezzUITests.self).url(forResource: "photo.jpg", withExtension: "json") else {
+                return HttpResponse.ok(.json("{}".data(using: .utf8) as AnyObject))
+            }
+            guard let data = try? Data(contentsOf: url) else {
+                return HttpResponse.ok(.json("{}".data(using: .utf8) as AnyObject))
+            }
+            
+            return HttpResponse.ok(.data(data, contentType: "image/jpeg"))
         }
     }
 }

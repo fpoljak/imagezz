@@ -16,7 +16,7 @@ public class ApiService {
             if ProcessInfo.processInfo.arguments.contains("TESTING") {
                 return "http://localhost:8080/"
             } else {
-                return "https://picsum.photos/v2/"
+                return "https://picsum.photos/"
             }
         }
     }
@@ -50,7 +50,7 @@ public class ApiService {
     @discardableResult
     static func genericRequest<T: Codable>(method: HTTPMethod, endpoint: String, params: [String: Any]? = nil, completion: @escaping ((T?) -> Void)) -> DataRequest {
         
-        let fullUrl = baseUrl + endpoint
+        let fullUrl = baseUrl + "v2/" + endpoint
         print("URL: \(fullUrl)")
         print("Params: \(params ?? [:])")
         let encoding: ParameterEncoding = method == .get ? URLEncoding.default : JSONEncoding.default
