@@ -13,18 +13,26 @@ class MainViewController: UIViewController {
 
     var viewModel: MainViewModel!
     
-    private var tokens = [AnyCancellable]()
-    
     @IBOutlet weak var collectionView: UICollectionView!
+    
+    private var disposables: Set<AnyCancellable> = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         
         viewModel = MainViewModel(collectionView: collectionView)
 
         configureCollectionView()
         viewModel.loadImagesList()
+        
+        viewModel.$selectedItem.sink { [unowned self] (item) in
+            guard let item = item else {
+                return
+            }
+            let vc = ImageDetailViewController()
+            vc.viewModel.imageItem = item
+            self.present(vc, animated: true, completion: nil)
+        }.store(in: &disposables)
     }
     
     private func configureCollectionView() {
@@ -35,7 +43,6 @@ class MainViewController: UIViewController {
     
     private func createLayout() -> UICollectionViewLayout {
         let height = UIScreen.main.bounds.size.width / 2
-        // orientation change!!!
         
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .absolute(height))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -48,6 +55,10 @@ class MainViewController: UIViewController {
         
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = .zero
+        
+        let footerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(50.0))
+        let footer = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: footerSize, elementKind: UICollectionView.elementKindSectionFooter, alignment: .bottom)
+        section.boundarySupplementaryItems = [footer]
         
         let layout = UICollectionViewCompositionalLayout(section: section)
         layout.configuration.interSectionSpacing = 0

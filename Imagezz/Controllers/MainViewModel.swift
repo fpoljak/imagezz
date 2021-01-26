@@ -15,6 +15,7 @@ class MainViewModel: CollectionViewModel<ImageCollectionViewCell, ImageListSecti
     var reachedEnd = false
     
     @Published var isLoading = false
+    @Published var selectedItem: ImageItem?
     
     private var disposables: Set<AnyCancellable> = []
     
@@ -74,7 +75,7 @@ class MainViewModel: CollectionViewModel<ImageCollectionViewCell, ImageListSecti
     }
     
     func openImageDetails(_ item: ImageItem) {
-        
+        selectedItem = item
     }
 }
 

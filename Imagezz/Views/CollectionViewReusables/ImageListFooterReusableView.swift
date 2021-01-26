@@ -19,6 +19,7 @@ class ImageListFooterReusableView: UICollectionReusableView {
     private var disposables: Set<AnyCancellable> = []
     
     lazy var loadingIndicator: UIActivityIndicatorView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
         $0.style = .medium
         return $0
     }(UIActivityIndicatorView())
@@ -30,6 +31,7 @@ class ImageListFooterReusableView: UICollectionReusableView {
         addSubview(loadingIndicator)
         loadingIndicator.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         loadingIndicator.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        loadingIndicator.startAnimating()
         
         $showLoader.sink { [unowned self] (newValue) in
             if newValue {

@@ -20,6 +20,7 @@
 		054B7F5125BF92670001BE0C /* ImageListFooterReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054B7F5025BF92670001BE0C /* ImageListFooterReusableView.swift */; };
 		054B7F5425BF99BD0001BE0C /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054B7F5225BF99BD0001BE0C /* ImageDetailViewController.swift */; };
 		054B7F5525BF99BD0001BE0C /* ImageDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 054B7F5325BF99BD0001BE0C /* ImageDetailViewController.xib */; };
+		054B7F5725C0376A0001BE0C /* ImageDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054B7F5625C0376A0001BE0C /* ImageDetailViewModel.swift */; };
 		05893B4825BF3CA70092CC0A /* ImageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05893B4725BF3CA70092CC0A /* ImageItem.swift */; };
 		05893B4A25BF3D300092CC0A /* ImageApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05893B4925BF3D300092CC0A /* ImageApiService.swift */; };
 		05893B4D25BF3FB10092CC0A /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05893B4C25BF3FB10092CC0A /* MainViewModel.swift */; };
@@ -71,6 +72,7 @@
 		054B7F5025BF92670001BE0C /* ImageListFooterReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListFooterReusableView.swift; sourceTree = "<group>"; };
 		054B7F5225BF99BD0001BE0C /* ImageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
 		054B7F5325BF99BD0001BE0C /* ImageDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageDetailViewController.xib; sourceTree = "<group>"; };
+		054B7F5625C0376A0001BE0C /* ImageDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailViewModel.swift; sourceTree = "<group>"; };
 		05893B4725BF3CA70092CC0A /* ImageItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageItem.swift; sourceTree = "<group>"; };
 		05893B4925BF3D300092CC0A /* ImageApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageApiService.swift; sourceTree = "<group>"; };
 		05893B4C25BF3FB10092CC0A /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 				05893B4C25BF3FB10092CC0A /* MainViewModel.swift */,
 				05893B4E25BF43740092CC0A /* MainViewController.swift */,
 				05893B4F25BF43740092CC0A /* MainViewController.xib */,
+				054B7F5625C0376A0001BE0C /* ImageDetailViewModel.swift */,
 				054B7F5225BF99BD0001BE0C /* ImageDetailViewController.swift */,
 				054B7F5325BF99BD0001BE0C /* ImageDetailViewController.xib */,
 			);
@@ -536,6 +539,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				054B7F5725C0376A0001BE0C /* ImageDetailViewModel.swift in Sources */,
 				05893B5025BF43740092CC0A /* MainViewController.swift in Sources */,
 				05893B4D25BF3FB10092CC0A /* MainViewModel.swift in Sources */,
 				05893B4A25BF3D300092CC0A /* ImageApiService.swift in Sources */,
