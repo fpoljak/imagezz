@@ -19,22 +19,28 @@ class ImageCollectionViewCell: UICollectionViewCell, Providable {
     var item: ImageItem?
     
     @IBOutlet weak private var imageView: UIImageView!
+
+    let imageSizeize = UIScreen.main.bounds.size.width * UIScreen.main.scale / 2
     
-    let size = UIScreen.main.bounds.size.width * UIScreen.main.scale / 2
+    private lazy var imageFilter: ImageFilter = AspectScaledToFillSizeFilter(size: CGSize(width: imageSizeize, height: imageSizeize))
     
-    private lazy var imageFilter: ImageFilter = AspectScaledToFillSizeFilter(size: CGSize(width: size, height: size))
+    private lazy var gradientLayer: CAGradientLayer = {
+        $0.startPoint = CGPoint(x: 0.0, y: 0.0)
+        $0.endPoint = CGPoint(x: 1.0, y: 1.0)
+        $0.colors = [UIColor.white.cgColor, UIColor.lightGray.withAlphaComponent(0.25).cgColor]
+        return $0
+    }(CAGradientLayer())
     
     override func awakeFromNib() {
         super.awakeFromNib()
         imageView.contentMode = .scaleAspectFill
-        let gradientLayer = CAGradientLayer()
-        let size = UIScreen.main.bounds.size.width / 2
-        gradientLayer.frame = CGRect(origin: .zero, size: CGSize(width: size, height: size))
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
-        gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
-        gradientLayer.colors = [UIColor.white.cgColor, UIColor.lightGray.withAlphaComponent(0.3).cgColor]
-        contentView.layer.insertSublayer(gradientLayer, below: contentView.layer.sublayers!.last!)
         imageView.backgroundColor = .clear
+        contentView.layer.insertSublayer(gradientLayer, below: contentView.layer.sublayers!.last!)
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        gradientLayer.frame = contentView.bounds
     }
     
     func provide(_ item: ImageItem) {

@@ -28,14 +28,14 @@ class MainViewController: UIViewController {
     }
     
     private func configureCollectionView() {
-        let dataSource = viewModel.makeDataSource()
-        collectionView.dataSource = dataSource
+        collectionView.dataSource = viewModel.makeDataSource()
         collectionView.delegate = viewModel
         collectionView.collectionViewLayout = createLayout()
     }
     
     private func createLayout() -> UICollectionViewLayout {
         let height = UIScreen.main.bounds.size.width / 2
+        // orientation change!!!
         
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .absolute(height))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -53,5 +53,12 @@ class MainViewController: UIViewController {
         layout.configuration.interSectionSpacing = 0
         
         return layout
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        // handle orientation change
+        collectionView.collectionViewLayout.invalidateLayout()
+        collectionView.collectionViewLayout = createLayout()
     }
 }
