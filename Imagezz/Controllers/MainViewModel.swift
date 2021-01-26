@@ -13,12 +13,43 @@ class MainViewModel: CollectionViewModel<ImageCollectionViewCell, ImageListSecti
     var currentPage = 0
     var lastScrollY = CGFloat(0)
     var reachedEnd = false
-    var isLoading = false
+    
+    @Published var isLoading = false
+    
+    private var disposables: Set<AnyCancellable> = []
+    
+    let imageHeight = UIScreen.main.bounds.size.width / 2
     
     init(collectionView: UICollectionView) {
         super.init(collectionView: collectionView, cellReuseIdentifier: "ImageCollectionViewCell")
         collectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: "ImageCollectionViewCell")
         collectionView.register(UINib.init(nibName: "ImageCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ImageCollectionViewCell")
+        collectionView.register(ImageListFooterReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: ImageListFooterReusableView.reuseIdentifier
+        )
+        
+        $isLoading.sink { [unowned self] (newValue) in
+            self.update()
+        }.store(in: &disposables)
+    }
+    
+    override func makeDataSource() -> CollectionViewModel<ImageCollectionViewCell, ImageListSection>.DataSource {
+        let dataSource = super.makeDataSource()
+        
+        dataSource.supplementaryViewProvider = { [unowned self] collectionView, kind, indexPath in
+            guard kind == UICollectionView.elementKindSectionFooter else {
+                return nil
+            }
+            
+            guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ImageListFooterReusableView.reuseIdentifier, for: indexPath) as? ImageListFooterReusableView else {
+                return nil
+            }
+            
+            footer.showLoader = self.isLoading
+            
+            return footer
+        }
+        
+        return dataSource
     }
     
     func loadImagesList() {
@@ -36,10 +67,14 @@ class MainViewModel: CollectionViewModel<ImageCollectionViewCell, ImageListSecti
     }
     
     func reloadImages() {
-        remove(items.value)
+        removeAll()
         currentPage = 0
         reachedEnd = false
         loadImagesList()
+    }
+    
+    func openImageDetails(_ item: ImageItem) {
+        
     }
 }
 
@@ -47,7 +82,7 @@ class MainViewModel: CollectionViewModel<ImageCollectionViewCell, ImageListSecti
 extension MainViewModel: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item = items.value[indexPath.item]
-        // ...
+        openImageDetails(item)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -60,7 +95,7 @@ extension MainViewModel: UICollectionViewDelegate {
         if scrollingUp {
             return
         }
-        if scrollY > scrollView.contentSize.height - scrollView.bounds.size.height - 200 {
+        if scrollY > scrollView.contentSize.height - scrollView.bounds.size.height - imageHeight * 1.5 {
             loadImagesList()
         }
     }

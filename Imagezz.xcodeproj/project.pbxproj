@@ -17,6 +17,9 @@
 		0524DF8325BF2EB800C2CC53 /* ImagezzTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0524DF8225BF2EB800C2CC53 /* ImagezzTests.swift */; };
 		0524DF8E25BF2EB800C2CC53 /* ImagezzUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0524DF8D25BF2EB800C2CC53 /* ImagezzUITests.swift */; };
 		054B7F4E25BF79820001BE0C /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054B7F4D25BF79820001BE0C /* ImageService.swift */; };
+		054B7F5125BF92670001BE0C /* ImageListFooterReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054B7F5025BF92670001BE0C /* ImageListFooterReusableView.swift */; };
+		054B7F5425BF99BD0001BE0C /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054B7F5225BF99BD0001BE0C /* ImageDetailViewController.swift */; };
+		054B7F5525BF99BD0001BE0C /* ImageDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 054B7F5325BF99BD0001BE0C /* ImageDetailViewController.xib */; };
 		05893B4825BF3CA70092CC0A /* ImageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05893B4725BF3CA70092CC0A /* ImageItem.swift */; };
 		05893B4A25BF3D300092CC0A /* ImageApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05893B4925BF3D300092CC0A /* ImageApiService.swift */; };
 		05893B4D25BF3FB10092CC0A /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05893B4C25BF3FB10092CC0A /* MainViewModel.swift */; };
@@ -65,6 +68,9 @@
 		0524DF8D25BF2EB800C2CC53 /* ImagezzUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagezzUITests.swift; sourceTree = "<group>"; };
 		0524DF8F25BF2EB800C2CC53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		054B7F4D25BF79820001BE0C /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
+		054B7F5025BF92670001BE0C /* ImageListFooterReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListFooterReusableView.swift; sourceTree = "<group>"; };
+		054B7F5225BF99BD0001BE0C /* ImageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
+		054B7F5325BF99BD0001BE0C /* ImageDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageDetailViewController.xib; sourceTree = "<group>"; };
 		05893B4725BF3CA70092CC0A /* ImageItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageItem.swift; sourceTree = "<group>"; };
 		05893B4925BF3D300092CC0A /* ImageApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageApiService.swift; sourceTree = "<group>"; };
 		05893B4C25BF3FB10092CC0A /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
@@ -184,6 +190,14 @@
 			path = ImagezzUITests;
 			sourceTree = "<group>";
 		};
+		054B7F4F25BF92190001BE0C /* CollectionViewReusables */ = {
+			isa = PBXGroup;
+			children = (
+				054B7F5025BF92670001BE0C /* ImageListFooterReusableView.swift */,
+			);
+			path = CollectionViewReusables;
+			sourceTree = "<group>";
+		};
 		05893B4625BF3C730092CC0A /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -198,6 +212,8 @@
 				05893B4C25BF3FB10092CC0A /* MainViewModel.swift */,
 				05893B4E25BF43740092CC0A /* MainViewController.swift */,
 				05893B4F25BF43740092CC0A /* MainViewController.xib */,
+				054B7F5225BF99BD0001BE0C /* ImageDetailViewController.swift */,
+				054B7F5325BF99BD0001BE0C /* ImageDetailViewController.xib */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -213,6 +229,7 @@
 		05893B5525BF4C210092CC0A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				054B7F4F25BF92190001BE0C /* CollectionViewReusables */,
 				05893B5625BF4C490092CC0A /* CollectionViewCells */,
 			);
 			path = Views;
@@ -370,6 +387,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				054B7F5525BF99BD0001BE0C /* ImageDetailViewController.xib in Resources */,
 				0524DF7825BF2EB800C2CC53 /* LaunchScreen.storyboard in Resources */,
 				05893B5125BF43740092CC0A /* MainViewController.xib in Resources */,
 				05893B5A25BF4C760092CC0A /* ImageCollectionViewCell.xib in Resources */,
@@ -521,11 +539,13 @@
 				05893B5025BF43740092CC0A /* MainViewController.swift in Sources */,
 				05893B4D25BF3FB10092CC0A /* MainViewModel.swift in Sources */,
 				05893B4A25BF3D300092CC0A /* ImageApiService.swift in Sources */,
+				054B7F5125BF92670001BE0C /* ImageListFooterReusableView.swift in Sources */,
 				05893B5F25BF4F310092CC0A /* Binding.swift in Sources */,
 				0524DF6C25BF2EB400C2CC53 /* AppDelegate.swift in Sources */,
 				054B7F4E25BF79820001BE0C /* ImageService.swift in Sources */,
 				05893B5C25BF4DD10092CC0A /* CollectionViewModel.swift in Sources */,
 				0519B39425BF38C900C72AFF /* ApiService.swift in Sources */,
+				054B7F5425BF99BD0001BE0C /* ImageDetailViewController.swift in Sources */,
 				05893B5425BF4A720092CC0A /* Providable.swift in Sources */,
 				05893B5925BF4C760092CC0A /* ImageCollectionViewCell.swift in Sources */,
 				0524DF6E25BF2EB400C2CC53 /* SceneDelegate.swift in Sources */,

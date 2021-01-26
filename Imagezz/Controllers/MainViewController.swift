@@ -23,30 +23,35 @@ class MainViewController: UIViewController {
         
         viewModel = MainViewModel(collectionView: collectionView)
 
-        print("loading images...")
         configureCollectionView()
         viewModel.loadImagesList()
     }
     
     private func configureCollectionView() {
-        collectionView.dataSource = viewModel.makeDataSource()
+        let dataSource = viewModel.makeDataSource()
+        collectionView.dataSource = dataSource
         collectionView.delegate = viewModel
         collectionView.collectionViewLayout = createLayout()
     }
     
     private func createLayout() -> UICollectionViewLayout {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5),heightDimension: .fractionalHeight(1.0))
+        let height = UIScreen.main.bounds.size.width / 2
+        
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .absolute(height))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = .zero
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),heightDimension: .fractionalHeight(0.25))
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(height))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
         group.interItemSpacing = .fixed(0)
         group.contentInsets = .zero
+        
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = .zero
+        
         let layout = UICollectionViewCompositionalLayout(section: section)
         layout.configuration.interSectionSpacing = 0
+        
         return layout
     }
-
 }

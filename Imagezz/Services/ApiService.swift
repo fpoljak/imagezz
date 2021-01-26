@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+import Combine
 
 public class ApiService {
     static var baseUrl: String {

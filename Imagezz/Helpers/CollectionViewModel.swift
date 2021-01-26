@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Combine
+//import Combine
 
 class CollectionViewModel<CellType: UICollectionViewCell & Providable, SectionIdentifierType: Hashable & CaseIterable>: NSObject {
     typealias Item = CellType.ProvidedItem
@@ -25,9 +25,7 @@ class CollectionViewModel<CellType: UICollectionViewCell & Providable, SectionId
         self.collectionView = collectionView
         super.init()
     }
-}
 
-extension CollectionViewModel {
     private func cellProvider(_ collectionView: UICollectionView, indexPath: IndexPath, item: Item) -> UICollectionViewCell? {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! CellType
         cell.provide(item)
@@ -43,11 +41,16 @@ extension CollectionViewModel {
 }
 
 extension CollectionViewModel {
-    private func update() {
-        var snapshot = NSDiffableDataSourceSnapshot<SectionIdentifierType, Item>()
-        snapshot.appendSections(SectionIdentifierType.allCases as! [SectionIdentifierType])
-        snapshot.appendItems(items.value)
-        dataSource?.apply(snapshot)
+    func update() {
+        DispatchQueue.main.async { [weak self] () in
+            guard let dataSource = self?.dataSource else {
+                return
+            }
+            var snapshot = NSDiffableDataSourceSnapshot<SectionIdentifierType, Item>()
+            snapshot.appendSections(SectionIdentifierType.allCases as! [SectionIdentifierType])
+            snapshot.appendItems(self!.items.value)
+            dataSource.apply(snapshot, animatingDifferences: true)
+        }
     }
         
     public func add(_ items: [Item]) {
@@ -61,6 +64,11 @@ extension CollectionViewModel {
         items.forEach { item in
             self.items.value.removeAll { $0 == item }
         }
+        update()
+    }
+    
+    public func removeAll() {
+        items.value.removeAll()
         update()
     }
 }

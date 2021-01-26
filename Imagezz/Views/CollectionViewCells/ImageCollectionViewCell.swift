@@ -39,12 +39,7 @@ class ImageCollectionViewCell: UICollectionViewCell, Providable {
     
     func provide(_ item: ImageItem) {
         self.item = item
-//        if let cachedThumbnail = ImageCollectionViewCell.thumbnailCache[item.id] {
-//            imageView.image = cachedThumbnail
-//            return
-//        }
-//        let loadingId = item.id
-        imageView.image = nil
+        imageView.image = nil // to prevent briefly showing wrong image
         imageView.af.setImage(withURL: item.downloadUrl, placeholderImage: nil, filter: imageFilter, imageTransition: .crossDissolve(0.25), runImageTransitionIfCached: true)
     }
 }
